@@ -1,0 +1,155 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
+import type { ReactNode } from "react";
+
+import appCss from "../styles.css?url";
+import { SyncStrip } from "@/components/ops/SyncStrip";
+import { Masthead } from "@/components/ops/Masthead";
+import { ModuleNav } from "@/components/ops/ModuleNav";
+import { LiveClock } from "@/components/ops/LiveClock";
+
+function NotFoundComponent() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Go home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  console.error(error);
+  const router = useRouter();
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page didn't load
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Something went wrong on our end. You can try refreshing or head back home.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <button
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Try again
+          </button>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            Go home
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "IAP Mission Control" },
+      {
+        name: "description",
+        content:
+          "Offline-first digital platform for remote management of the Indian Antarctic Programme.",
+      },
+      { name: "author", content: "NCPOR" },
+      { property: "og:title", content: "IAP Mission Control" },
+      {
+        property: "og:description",
+        content:
+          "Offline-first digital platform for remote management of the Indian Antarctic Programme.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap",
+      },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+  }),
+  shellComponent: RootShell,
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
+});
+
+function RootShell({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="min-h-screen bg-ground text-ink font-sans antialiased flex flex-col">
+        <SyncStrip />
+        <Masthead subtitle={<LiveClock />} />
+
+        <div className="flex-1 mx-auto w-full max-w-[1400px] px-4 sm:px-6 py-5 grid grid-cols-12 gap-4 items-start">
+          <ModuleNav />
+          <main className="col-span-12 lg:col-span-9 xl:col-span-10">
+            {/* Required: nested routes render here. */}
+            <Outlet />
+          </main>
+        </div>
+
+        <footer className="border-t border-gold/20">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-3 flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase text-inkmuted">
+            <span>Confidential · NCPOR internal · DPDP 2023</span>
+            <span className="hidden sm:inline">
+              Edge-first · append-only ledger · air-gap capable
+            </span>
+          </div>
+        </footer>
+      </div>
+    </QueryClientProvider>
+  );
+}

@@ -1,0 +1,96 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+/*
+ * IAP Mission Control — "Deco polar console" design system.
+ * All colors are semantic tokens. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
+  --color-background: var(--ground);
+  --color-foreground: var(--ink);
+  --color-ground: var(--ground);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-gold: var(--gold);
+  --color-goldlight: var(--goldlight);
+  --color-ice: var(--ice);
+  --color-rust: var(--rust);
+  --color-moss: var(--moss);
+  --color-ink: var(--ink);
+  --color-inkmuted: var(--inkmuted);
+
+  --color-card: var(--panel);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--panel2);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--gold);
+  --color-primary-foreground: var(--ground);
+  --color-secondary: var(--panel2);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--panel2);
+  --color-muted-foreground: var(--inkmuted);
+  --color-accent: var(--panel2);
+  --color-accent-foreground: var(--goldlight);
+  --color-destructive: var(--rust);
+  --color-destructive-foreground: var(--ink);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--gold);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+:root {
+  --ground: #10141c;
+  --panel: #161c27;
+  --panel2: #1c2331;
+  --gold: #c6a15a;
+  --goldlight: #e7d3a0;
+  --ice: #9cc6dc;
+  --rust: #c15a44;
+  --moss: #6f9a76;
+  --ink: #d9dde4;
+  --inkmuted: #8b93a1;
+  --border: color-mix(in oklab, var(--gold) 25%, transparent);
+  --radius: 0px;
+}
+
+@keyframes pulse-telem {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+
+@utility telem {
+  animation: pulse-telem 2.4s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--gold) 30%, transparent);
+  }
+}
