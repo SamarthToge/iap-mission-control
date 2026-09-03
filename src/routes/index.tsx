@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Panel, Stat, Gauge, Row, Check } from "@/components/ops/Panel";
+import { Box } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,6 +25,27 @@ export const Route = createFileRoute("/")({
 function Overview() {
   return (
     <div className="grid grid-cols-12 gap-4">
+      {/* ── 3-D Monitor launch banner ── */}
+      <div className="col-span-12">
+        <Link
+          to="/station-3d"
+          className="flex items-center justify-between px-4 py-3 border border-ice/40 bg-panel2 hover:bg-ice/5 transition-colors group"
+        >
+          <span className="flex items-center gap-3">
+            <Box size={14} className="text-ice shrink-0" />
+            <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-ice">
+              3-D Station Monitor — Bharati &amp; Maitri digital twin
+            </span>
+            <span className="hidden sm:inline font-mono text-[10px] tracking-[0.1em] text-inkmuted">
+              · Buildings pulse red when health scores or energy metrics drop
+            </span>
+          </span>
+          <span className="font-mono text-[10px] tracking-[0.12em] uppercase text-inkmuted group-hover:text-ice transition-colors">
+            Launch ↗
+          </span>
+        </Link>
+      </div>
+
       <div className="col-span-12 md:col-span-6">
         <Panel
           title="Bharati · 70°S 11°E"

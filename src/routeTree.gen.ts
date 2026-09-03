@@ -15,6 +15,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as ExpeditionRouteImport } from './routes/expedition'
 import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as PersonnelRouteImport } from './routes/personnel'
+import { Route as Station3dRouteImport } from './routes/station-3d'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const PersonnelRoute = PersonnelRouteImport.update({
   path: '/personnel',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Station3dRoute = Station3dRouteImport.update({
+  id: '/station-3d',
+  path: '/station-3d',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/expedition': typeof ExpeditionRoute
   '/inventory': typeof InventoryRoute
   '/personnel': typeof PersonnelRoute
+  '/station-3d': typeof Station3dRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/expedition': typeof ExpeditionRoute
   '/inventory': typeof InventoryRoute
   '/personnel': typeof PersonnelRoute
+  '/station-3d': typeof Station3dRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,14 +79,27 @@ export interface FileRoutesById {
   '/expedition': typeof ExpeditionRoute
   '/inventory': typeof InventoryRoute
   '/personnel': typeof PersonnelRoute
+  '/station-3d': typeof Station3dRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/cargo' | '/emergency' | '/expedition' | '/inventory' | '/personnel'
+    | '/'
+    | '/cargo'
+    | '/emergency'
+    | '/expedition'
+    | '/inventory'
+    | '/personnel'
+    | '/station-3d'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/cargo' | '/emergency' | '/expedition' | '/inventory' | '/personnel'
+    | '/'
+    | '/cargo'
+    | '/emergency'
+    | '/expedition'
+    | '/inventory'
+    | '/personnel'
+    | '/station-3d'
   id:
     | '__root__'
     | '/'
@@ -87,6 +108,7 @@ export interface FileRouteTypes {
     | '/expedition'
     | '/inventory'
     | '/personnel'
+    | '/station-3d'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -96,6 +118,7 @@ export interface RootRouteChildren {
   ExpeditionRoute: typeof ExpeditionRoute
   InventoryRoute: typeof InventoryRoute
   PersonnelRoute: typeof PersonnelRoute
+  Station3dRoute: typeof Station3dRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -142,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PersonnelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/station-3d': {
+      id: '/station-3d'
+      path: '/station-3d'
+      fullPath: '/station-3d'
+      preLoaderRoute: typeof Station3dRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -152,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpeditionRoute: ExpeditionRoute,
   InventoryRoute: InventoryRoute,
   PersonnelRoute: PersonnelRoute,
+  Station3dRoute: Station3dRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

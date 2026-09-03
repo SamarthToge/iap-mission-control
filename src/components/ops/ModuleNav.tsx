@@ -6,6 +6,7 @@ import {
   Package,
   Container,
   Compass,
+  Box,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -19,6 +20,7 @@ type Module = {
 };
 
 const modules: Module[] = [
+  { to: "/station-3d", label: "3-D Monitor", count: "↗", tone: "text-ice", dot: false, Icon: Box },
   { to: "/emergency", label: "Emergency", count: "2", tone: "text-rust", dot: true, Icon: AlertTriangle },
   { to: "/personnel", label: "Personnel", count: "41", tone: "text-inkmuted", dot: false, Icon: Users },
   { to: "/inventory", label: "Inventory", count: "9", tone: "text-inkmuted", dot: false, Icon: Package },
@@ -32,7 +34,7 @@ export function ModuleNav() {
       <div className="border border-gold/25 bg-panel">
         <div className="border-b border-gold/25 px-3 py-2.5 font-mono text-[10px] tracking-[0.16em] uppercase text-inkmuted flex items-center justify-between">
           <span>Modules</span>
-          <span className="text-gold">5</span>
+          <span className="text-gold">6</span>
         </div>
         <div className="divide-y divide-gold/12 font-mono text-[11px]">
           <Link

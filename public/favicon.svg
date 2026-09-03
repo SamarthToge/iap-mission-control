@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#10141c"/>
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="none" stroke="#c6a15a" stroke-width="2" stroke-opacity="0.6"/>
+  <!-- Diamond grid accent -->
+  <polygon points="32,8 54,32 32,56 10,32" fill="none" stroke="#c6a15a" stroke-width="1.5" stroke-dasharray="3,3" stroke-opacity="0.4"/>
+  <!-- Polar Compass Star -->
+  <polygon points="32,12 36,28 52,32 36,36 32,52 28,36 12,32 28,28" fill="#c6a15a"/>
+  <!-- Center Ice Core -->
+  <polygon points="32,22 35,29 42,32 35,35 32,42 29,35 22,32 29,29" fill="#9cc6dc"/>
+  <!-- Central Dot -->
+  <circle cx="32" cy="32" r="3" fill="#e7d3a0"/>
+</svg>
